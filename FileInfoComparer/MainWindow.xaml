@@ -1,0 +1,200 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:FileInfoComparer"
+        x:Class="FileInfoComparer.MainWindow"
+        mc:Ignorable="d"
+        Title="File Comparer"
+        Height="733"
+        Width="772">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background"
+                    Value="WhiteSmoke" />
+        </Style>
+        <local:ByteToMegaByteConverter x:Key="ByteToMegaByteConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="43" />
+            <RowDefinition Height="360*" />
+            <RowDefinition Height="299*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="377*" />
+            <!--<ColumnDefinition Width="5" />-->
+            <ColumnDefinition Width="380*" />
+        </Grid.ColumnDefinitions>
+        <xceed:WatermarkTextBox Watermark="Select Left Root"
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Text="{Binding LeftRoot}"
+                                VerticalAlignment="Top"
+                                Height="25"
+                                Margin="10,10,52,0" />
+        <Button x:Name="button"
+                Grid.Row="0"
+                Grid.Column="0"
+                Command="{Binding SelectLeftRootCommand}"
+                HorizontalAlignment="Right"
+                Margin="0,10,10,0"
+                VerticalAlignment="Top"
+                Width="37"
+                Height="25">
+            <Button.Content>
+                <Image Source="pack://application:,,,/Icons/search16.png" />
+            </Button.Content>
+        </Button>
+        <GridSplitter Grid.RowSpan="3"
+                      Grid.Column="1"
+                      HorizontalAlignment="Left"
+                      Width="5" />
+        <xceed:WatermarkTextBox Watermark="Select Right Root"
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding RightRoot}"
+                                VerticalAlignment="Top"
+                                Height="25"
+                                Margin="10,10,52,0" />
+        <Button x:Name="btnSelectRight"
+                Grid.Row="0"
+                Grid.Column="1"
+                Command="{Binding SelectRightRootCommand}"
+                HorizontalAlignment="Right"
+                Margin="0,10,10,0"
+                VerticalAlignment="Top"
+                Width="37"
+                Height="25">
+            <Button.Content>
+                <Image Source="pack://application:,,,/Icons/search16.png" />
+            </Button.Content>
+        </Button>
+        <xceed:WatermarkTextBox Watermark="Custom Info"
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                VerticalAlignment="Top"
+                                Margin="10,10,10,0"
+                                Height="24" />
+        <DataGrid Grid.Row="1"
+                  Grid.Column="0"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding LeftFiles}"
+                  SelectedItem="{Binding LeftSelection}"
+                  Margin="10,40,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File Name"
+                                    Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Size in Byte"
+                                    Binding="{Binding Length}" />
+                <DataGridTextColumn Header="Type"
+                                    Binding="{Binding Extension}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding RightFiles}"
+                  SelectedItem="{Binding RightSelection}"
+                  Grid.Column="1"
+                  Margin="10,40,10,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="File Name"
+                                    Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Size in Byte"
+                                    Binding="{Binding Length}" />
+                <DataGridTextColumn Header="Type"
+                                    Binding="{Binding Extension}" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <xceed:PropertyGrid AutoGenerateProperties="False"
+                            SelectedObject="{Binding LeftSelection}"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="10,10,10,0"
+                            Height="250"
+                            VerticalAlignment="Top">
+            <xceed:PropertyGrid.PropertyDefinitions>
+                <xceed:PropertyDefinition TargetProperties="Name"
+                                          DisplayOrder="1"
+                                          DisplayName="Name" />
+                <xceed:PropertyDefinition TargetProperties="Extension"
+                                          DisplayOrder="2"
+                                          DisplayName="Extension" />
+                <xceed:PropertyDefinition TargetProperties="CreationTime"
+                                          DisplayOrder="3"
+                                          DisplayName="Creation Time" />
+                <xceed:PropertyDefinition TargetProperties="IsReadOnly"
+                                          DisplayOrder="4"
+                                          DisplayName="Read-Only" />
+                <xceed:PropertyDefinition TargetProperties="Length"
+                                          DisplayOrder="5"
+                                          DisplayName="Size in Byte" />
+            </xceed:PropertyGrid.PropertyDefinitions>
+        </xceed:PropertyGrid>
+        <xceed:PropertyGrid AutoGenerateProperties="False"
+                            SelectedObject="{Binding RightSelection}"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="10,10,10,0"
+                            Height="250"
+                            VerticalAlignment="Top">
+            <xceed:PropertyGrid.PropertyDefinitions>
+                <xceed:PropertyDefinition TargetProperties="Name"
+                                          DisplayOrder="1"
+                                          DisplayName="Name" />
+                <xceed:PropertyDefinition TargetProperties="Extension"
+                                          DisplayOrder="2"
+                                          DisplayName="Extension" />
+                <xceed:PropertyDefinition TargetProperties="CreationTime"
+                                          DisplayOrder="3"
+                                          DisplayName="Creation Time" />
+                <xceed:PropertyDefinition TargetProperties="IsReadOnly"
+                                          DisplayOrder="4"
+                                          DisplayName="Read-Only" />
+                <xceed:PropertyDefinition TargetProperties="Length"
+                                          DisplayOrder="5"
+                                          DisplayName="Size in Byte" />
+            </xceed:PropertyGrid.PropertyDefinitions>
+        </xceed:PropertyGrid>
+        <xceed:WatermarkTextBox Watermark="Custom Info"
+                                Grid.Row="1"
+                                Grid.Column="1"
+                                VerticalAlignment="Top"
+                                Margin="10,10,10,0"
+                                Height="24" />
+        <Button x:Name="btnInfo"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Margin="210,269,0,0"
+                Grid.Row="2"
+                VerticalAlignment="Top"
+                Width="75"
+                Height="20"
+                Click="btnInfo_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Icons/info16.png" />
+                    <TextBlock Text="Info"
+                               VerticalAlignment="Center" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+        <Button x:Name="btnClose"
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Margin="299,269,0,0"
+                Grid.Row="2"
+                VerticalAlignment="Top"
+                Width="75"
+                Height="20"
+                Click="btnClose_Click">
+            <Button.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Icons/close16.png" />
+                    <TextBlock Text="Close" VerticalAlignment="Center" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
+    </Grid>
+</Window>
